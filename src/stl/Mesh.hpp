@@ -13,17 +13,17 @@ class Mesh {
     const std::vector<glm::vec3> _vertices;
 
     const unsigned int _verticesCount;
-    const unsigned int _rawDataCount;
+    const unsigned int _pointCount;
 
   public:
     Mesh(const std::vector<glm::vec3> &vertices);
     ~Mesh();
 
     std::vector<glm::vec3> getVertices() const;
-    std::vector<float> getRawData() const;
+    std::vector<float> getPoints() const;
 
     unsigned int getVerticesCount() const;
-    unsigned int getRawDataCount() const;
+    unsigned int getPointCount() const;
 };
 
 } // namespace stl

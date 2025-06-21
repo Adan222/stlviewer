@@ -36,7 +36,7 @@ void Entity::setup() {
 
     // VBO
     VertexBufferObject vbo;
-    vbo.setData(mesh.getRawData().data(), sizeof(float) * mesh.getRawDataCount());
+    vbo.setData(mesh.getPoints().data(), sizeof(float) * mesh.getPointCount());
 
     /** Configure attributes */
 
@@ -69,7 +69,7 @@ void Entity::draw() const {
     _shaderProgram.useProgram();
     _vao.bind();
 
-    glDrawArrays(GL_TRIANGLES, 0, mesh.getRawDataCount());
+    glDrawArrays(GL_TRIANGLES, 0, mesh.getPointCount());
 }
 
 } // namespace stl
