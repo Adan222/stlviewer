@@ -3,7 +3,12 @@
 /** Constructors */
 
 stl::Mesh::Mesh(const std::vector<glm::vec3> &vertices)
-    : _vertices(vertices), _verticesCount(vertices.size()), _pointCount(vertices.size() * 3) {}
+    : _vertices(vertices), _normalVectors(), _verticesCount(vertices.size()),
+      _pointCount(vertices.size() * 3) {}
+
+stl::Mesh::Mesh(const std::vector<glm::vec3> &vertices, const std::vector<glm::vec3> &normalVectors)
+    : _vertices(vertices), _normalVectors(normalVectors), _verticesCount(vertices.size()),
+      _pointCount(vertices.size() * 3) {}
 
 stl::Mesh::~Mesh() {}
 
@@ -23,6 +28,8 @@ std::vector<float> stl::Mesh::getPoints() const {
 
     return rawFloats;
 }
+
+std::vector<glm::vec3> stl::Mesh::getNormalVectors() const { return _normalVectors; }
 
 unsigned int stl::Mesh::getVerticesCount() const { return _verticesCount; }
 
