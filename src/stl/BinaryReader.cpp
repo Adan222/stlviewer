@@ -28,11 +28,20 @@ stl::Mesh stl::BinaryReader::read() const {
     _fstream.read(reinterpret_cast<char *>(&triangleCount), sizeof(uint32_t));
 
     std::vector<glm::vec3> vertices;
+    std::vector<glm::vec3> normalVectors;
 
     for (uint32_t i = 0; i < triangleCount; ++i) {
         StlBinaryTriangle rawTriangle;
         _fstream.read(reinterpret_cast<char *>(&rawTriangle), sizeof(StlBinaryTriangle));
 
+        // Normal vector
+        glm::vec3 normalVector;
+        normalVector.x = rawTriangle.normal.x;
+        normalVector.y = rawTriangle.normal.y;
+        normalVector.z = rawTriangle.normal.z;
+        normalVectors.emplace_back(normalVector);
+
+        // Vertices
         for (int v = 0; v < 3; ++v) {
             vertices.emplace_back(glm::vec3(rawTriangle.vertices[v].x,
                                             rawTriangle.vertices[v].y,
@@ -40,5 +49,5 @@ stl::Mesh stl::BinaryReader::read() const {
         }
     }
 
-    return Mesh(vertices);
+    return Mesh(vertices, normalVectors);
 }
