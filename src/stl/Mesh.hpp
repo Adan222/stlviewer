@@ -29,6 +29,22 @@ class Mesh {
      */
     std::vector<glm::vec3> getNormalVectors() const;
 
+    /**
+     * Convert glm:vec3 vector to array of floats as required
+     * by OpenGL. This function also extend the number of vectors
+     * so that we can send normal vector per vertex. See the note.
+     *
+     * This function return number of normal vectors constituents three
+     * times bigger then number of normal vectors. See the note below.
+     *
+     * NOTE: We can't pass normal vectors per face(in our case triangle),
+     *       so this function is used to extend the number of normal vectors
+     *       in the array, so that we can send normal vector per vertex.
+     *
+     * @return Array of floats filled with normal vectors
+     */
+    std::vector<float> getNormalVectorPoints() const;
+
     unsigned int getVerticesCount() const;
     unsigned int getPointCount() const;
 };

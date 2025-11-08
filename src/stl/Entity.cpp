@@ -1,6 +1,7 @@
 #include "Entity.hpp"
 
 /** STD */
+#include <iostream>
 #include <vector>
 
 /** GLM */
@@ -34,20 +35,40 @@ void Entity::setup() {
     // VAO
     _vao.bind();
 
-    // VBO
-    VertexBufferObject vbo;
-    vbo.setData(mesh.getPoints().data(), sizeof(float) * mesh.getPointCount());
-
-    /** Configure attributes */
+    /**
+     * Configure attributes
+     *
+     * NOTE: that we have to set stride and startPointer to zero for each of attributes.
+     * This is because we uses two separate VBOs for each attribute.
+     */
 
     // Vertex position
+    VertexBufferObject positionVbo;
+
+    const int positionArraySize = mesh.getPoints().size();
+    positionVbo.setData(mesh.getPoints().data(), sizeof(float) * positionArraySize);
+
     AttributeConfiguration vertexConfig = { .index = 0,
                                             .size = 3,
                                             .dataType = AttributeConfiguration::Type::FLOAT,
                                             .normalize = false,
-                                            .stride = 3 * sizeof(float),
+                                            .stride = 0,
                                             .startPointer = 0 };
     _vao.configureAttribute(vertexConfig);
+
+    // Normal vector position
+    VertexBufferObject normalVbo;
+
+    const int normalArraySize = mesh.getNormalVectorPoints().size();
+    normalVbo.setData(mesh.getNormalVectorPoints().data(), sizeof(float) * normalArraySize);
+
+    AttributeConfiguration normalConfig = { .index = 1,
+                                            .size = 3,
+                                            .dataType = AttributeConfiguration::Type::FLOAT,
+                                            .normalize = false,
+                                            .stride = 0,
+                                            .startPointer = 0 };
+    _vao.configureAttribute(normalConfig);
 }
 
 void Entity::setModelMatrix(const glm::mat4 &matrix) const {
