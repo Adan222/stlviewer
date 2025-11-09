@@ -19,12 +19,14 @@ class TextReader : public stl::Reader {
     std::string cleanLine(const std::string &line) const;
 
     /**
-     * Split line int array of strings
+     * Split line into array of strings
      */
     std::vector<std::string> split(const std::string &str, const std::string &delimeter) const;
 
     /**
      * Read line and get normal vector of the triangle
+     *
+     * @return Normal vector of the triangle
      */
     glm::vec3 readNormalVector(const std::vector<std::string> &line) const;
 

@@ -17,7 +17,6 @@ class Mesh {
     const unsigned int _pointCount;
 
   public:
-    Mesh(const std::vector<glm::vec3> &vertices);
     Mesh(const std::vector<glm::vec3> &vertices, const std::vector<glm::vec3> &normalVectors);
     ~Mesh();
 

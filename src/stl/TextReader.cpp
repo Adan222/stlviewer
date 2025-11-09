@@ -73,24 +73,30 @@ stl::TextReader::~TextReader() {}
 stl::Mesh stl::TextReader::read() const {
     unsigned int vertexIndex = 0;
     std::vector<glm::vec3> vertices;
+    std::vector<glm::vec3> normalVectors;
 
     std::string rawLine;
     for (std::string line; std::getline(_fstream, rawLine);) {
         if (rawLine.empty())
             continue;
 
+        // Process and split line
         const std::string processedLine = cleanLine(rawLine);
         std::vector<std::string> lineList = split(processedLine, " ");
 
+        // Check if line is empty
         if (lineList.empty())
             continue;
 
         const std::string &cmd = lineList[0];
 
+        // TODO: What we should do with this?
         if (cmd == "solid") {
         }
 
         else if (cmd == "facet") {
+            glm::vec3 normalVector = readNormalVector(lineList);
+            normalVectors.emplace_back(normalVector);
         }
 
         else if (cmd == "outer" && lineList.size() > 1 && lineList[1] == "loop") {
@@ -118,7 +124,7 @@ stl::Mesh stl::TextReader::read() const {
         }
 
         else if (cmd == "endsolid")
-            return vertices;
+            return stl::Mesh(vertices, normalVectors);
 
         else
             throw std::runtime_error("Unknown keyword: " + cmd);

@@ -2,10 +2,6 @@
 
 /** Constructors */
 
-stl::Mesh::Mesh(const std::vector<glm::vec3> &vertices)
-    : _vertices(vertices), _normalVectors(), _verticesCount(vertices.size()),
-      _pointCount(vertices.size() * 3) {}
-
 stl::Mesh::Mesh(const std::vector<glm::vec3> &vertices, const std::vector<glm::vec3> &normalVectors)
     : _vertices(vertices), _normalVectors(normalVectors), _verticesCount(vertices.size()),
       _pointCount(vertices.size() * 3) {}
